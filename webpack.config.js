@@ -6,13 +6,14 @@ module.exports = {
   entry: ["./src/index.js", "./src/index.scss"],
   output: {
     path: path.resolve(__dirname, "public"),
-    publicPath: "/",
+    publicPath: "./",
     filename: "bundle.js",
   },
   plugins: [
     new HtmlWebpackPlugin({
       hash: true,
-      template: "./index.html",
+      path: path.resolve(__dirname, 'public'),
+      template: path.resolve(__dirname, 'index.html'),
     }),
     new MiniCssExtractPlugin({
       filename: "styles.css",
@@ -24,7 +25,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "script-loader",
+          loader: "babel-loader",
+          options: {
+            presets: [
+              '@babel/preset-env'
+            ]
+          }
         },
       },
       {
