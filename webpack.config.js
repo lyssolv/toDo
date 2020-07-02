@@ -1,22 +1,22 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
 
 module.exports = {
-  entry: [
-    './src/index.js',
-    './src/index.scss'
-  ],
+  entry: ["./src/index.js", "./src/index.scss"],
   output: {
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/',
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, "public"),
+    publicPath: "/",
+    filename: "bundle.js",
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      hash: true,
+      template: "./index.html",
+    }),
     new MiniCssExtractPlugin({
-      filename: "styles.css"
-    })
+      filename: "styles.css",
+    }),
   ],
   module: {
     rules: [
@@ -24,8 +24,8 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "script-loader"
-        }
+          loader: "script-loader",
+        },
       },
       {
         test: /\.s?css$/,
@@ -33,8 +33,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: process.env.NODE_ENV === 'development'
-            }
+              hmr: process.env.NODE_ENV === "development",
+            },
           },
           {
             loader: "css-loader",
@@ -42,13 +42,13 @@ module.exports = {
               modules: true,
               importLoaders: 1,
               sourceMap: true,
-            }
+            },
           },
           {
-            loader: "sass-loader"
-          }
-        ]
-      }
-    ]
-  }
+            loader: "sass-loader",
+          },
+        ],
+      },
+    ],
+  },
 };
